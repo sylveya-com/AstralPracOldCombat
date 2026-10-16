@@ -1,6 +1,6 @@
 # AstralPracOldCombat
 
-1.8 PvP mode enforcement for [AstralPractice](https://github.com/sylveya/AstralPractice) via [OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics/releases)
+1.8 PvP mode enforcement for [AstralPractice](https://modrinth.com/plugin/astralpractice) via [OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics/releases)
 
 ## » About
 
@@ -8,8 +8,8 @@ This addon bridges AstralPractice and OldCombatMechanics. Maps arena ladders to 
 
 ## » Dependencies
 
-- **AstralPractice** — required
-- **OldCombatMechanics** — required
+- **[AstralPractice](https://modrinth.com/plugin/astralpractice)** — required
+- **[OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics/releases)** — required
 
 ## » Installation
 
@@ -33,31 +33,30 @@ The compiled plugin jar will be generated in `build/libs/AstralPracOldCombat-1.0
 ### `config.yml`
 
 ```yaml
-# For optimal out-of-the-box OldCombatMechanics settings,
-# copy the contents of example-ocm-config.yml into
-# plugins/OldCombatMechanics/config.yml (back up the original first if needed).
-# The example file is located in the same folder as this config.yml.
+_version: 1
 
-# Which ladders use which mode
+# Which ladders use which mode.
+# Ladder names are matched case-insensitively (e.g. Nodebuff, nodebuff).
 ladder-modes:
-  BedWars: old
-  SkyWars: old
-  Bridges: old
-  MLGRush: old
-  TNTSumo: old
-  BattleRush: old
-  Boxing: old
-  BuildUHC: old
-  Debuff: old
-  Nodebuff: old
-  PearlFight: old
-  Soup: old
-  Sumo: old
-  SG: old
-  Fireball: old
-  Spleef: old
+  BedWars: "old"
+  SkyWars: "old"
+  Bridges: "old"
+  MLGRush: "old"
+  TNTSumo: "old"
+  BattleRush: "old"
+  Boxing: "old"
+  BuildUHC: "old"
+  Debuff: "old"
+  Nodebuff: "old"
+  PearlFight: "old"
+  Soup: "old"
+  Sumo: "old"
+  SG: "old"
+  Fireball: "old"
+  Spleef: "old"
 
-# Modules to enable for each mode (must match OCM module names)
+# Modules to enable for each mode (must match OCM module names).
+# Module overrides are applied to players when match begins.
 modules:
   old:
     - "attack-frequency"
