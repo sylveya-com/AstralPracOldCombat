@@ -1,11 +1,13 @@
-package dev.lokspel.zonepracoldcombat.listener;
+package dev.lokspel.astralpracoldcombat.listener;
 
-import dev.lokspel.zonepracoldcombat.config.ConfigManager;
-import dev.nandi0813.api.Event.Match.MatchEndEvent;
-import dev.nandi0813.api.Event.Match.MatchRoundStartEvent;
-import dev.nandi0813.api.Event.Match.MatchStartEvent;
-import dev.nandi0813.api.Interface.Match;
-import dev.nandi0813.practice.manager.fight.match.MatchManager;
+import dev.lokspel.api.AstralPracticeApi;
+import dev.lokspel.api.enums.PlayerState;
+import dev.lokspel.api.event.PlayerStateChangeEvent;
+import dev.lokspel.api.event.match.MatchEndEvent;
+import dev.lokspel.api.event.match.MatchRoundStartEvent;
+import dev.lokspel.api.event.match.MatchStartEvent;
+import dev.lokspel.api.interfaces.Match;
+import dev.lokspel.astralpracoldcombat.config.OldCombatConfig;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +18,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MatchListener implements Listener {
 
     private final OldCombatMechanicsAPI ocmApi;
-    private final ConfigManager configManager;
     private final JavaPlugin plugin;
 
-    public MatchListener(OldCombatMechanicsAPI ocmApi, ConfigManager configManager, JavaPlugin plugin) {
+    public MatchListener(OldCombatMechanicsAPI ocmApi, JavaPlugin plugin) {
         this.ocmApi = ocmApi;
-        this.configManager = configManager;
         this.plugin = plugin;
     }
 
@@ -47,6 +48,18 @@ public final class MatchListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerStateChange(PlayerStateChangeEvent event) {
+        if (event.getOldState() == PlayerState.MATCH && event.getNewState() != PlayerState.MATCH) {
+            ocmApi.clearAllModuleOverridesForPlayer(event.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        ocmApi.clearAllModuleOverridesForPlayer(event.getPlayer());
+    }
+
+    @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (!event.getMessage().equalsIgnoreCase("/leave")) {
             return;
@@ -54,7 +67,8 @@ public final class MatchListener implements Listener {
 
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            if (MatchManager.getInstance().getLiveMatchByPlayer(player) == null) {
+            AstralPracticeApi api = AstralPracticeApi.getInstance();
+            if (api == null || api.getMatches().getMatch(player) == null) {
                 ocmApi.clearAllModuleOverridesForPlayer(player);
             }
         }, 1L);
@@ -72,15 +86,12 @@ public final class MatchListener implements Listener {
             return;
         }
 
-        String mode = configManager.getMode(ladder);
+        String mode = OldCombatConfig.getMode(ladder);
         if (mode == null) {
             return;
         }
 
-        List<String> modules = configManager.getModeModules(mode);
-        if (modules == null) {
-            return;
-        }
+        List<String> modules = OldCombatConfig.getModeModules(mode);
         if (modules.isEmpty()) {
             return;
         }

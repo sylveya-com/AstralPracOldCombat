@@ -1,24 +1,32 @@
-# ZonePracOldCombat
+# AstralPracOldCombat
 
-1.8 PvP mode enforcement for [ZonePractice Pro](https://modrinth.com/plugin/zonepractice-pro) via [OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics/releases)
+1.8 PvP mode enforcement for [AstralPractice](https://github.com/sylveya/AstralPractice) via [OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics/releases)
 
 ## » About
 
-This addon bridges ZonePractice Pro and OldCombatMechanics. Maps arena ladders to OCM combat modes (`old` / `new`) and applies module overrides per-player at match start. No world restriction headaches, no manual `/ocm mode` commands — players get the right combat mode automatically.
+This addon bridges AstralPractice and OldCombatMechanics. Maps arena ladders to OCM combat modes (`old` / `new`) and applies module overrides per-player at match start. No world restriction headaches, no manual `/ocm mode` commands — players get the right combat mode automatically.
 
 ## » Dependencies
 
-- **ZonePractice Pro** — required
+- **AstralPractice** — required
 - **OldCombatMechanics** — required
 
 ## » Installation
 
-1. Install ZonePractice Pro and OldCombatMechanics
-2. Drop `ZonePracOldCombat-1.0.0.jar` into your `plugins/` folder
+1. Install AstralPractice and OldCombatMechanics
+2. Drop `AstralPracOldCombat-1.0.0.jar` into your `plugins/` folder
 3. Restart the server
-4. Edit `plugins/ZonePracOldCombat/config.yml` to map ladders to modes
+4. Edit `plugins/AstralPracOldCombat/config.yml` to map ladders to modes
 
-The plugin disables itself on startup if either the ZonePractice Pro or OldCombatMechanics API is missing.
+The plugin disables itself on startup if either the AstralPractice or OldCombatMechanics API is missing.
+
+## » Building
+
+```sh
+./gradlew build
+```
+
+The compiled plugin jar will be generated in `build/libs/AstralPracOldCombat-1.0.0.jar`.
 
 ## » Configuration
 
@@ -81,15 +89,16 @@ An `example-ocm-config.yml` is generated next to `config.yml` with recommended O
 
 ## » How it works
 
-- Listens to `MatchStartEvent` and `MatchRoundStartEvent`
+- Listens to `MatchStartEvent` and `MatchRoundStartEvent` from AstralPractice
 - Resolves the ladder name from the match at runtime
 - Looks up the configured mode (`old` / `new`) for that ladder
 - Applies `setModuleOverridesForPlayer()` with `FORCE_ENABLED` on every module listed under that mode — bypasses OCM world-based modeset restrictions
 - Clears all overrides on `MatchEndEvent`
-- Also clears overrides on `/leave` if the player has no live match, covering the case where ZPP ends a match without firing `MatchEndEvent`
+- Listens to `PlayerStateChangeEvent` to clear overrides whenever a player leaves `MATCH` state
+- Clears overrides on `/leave` and `PlayerQuitEvent`
 
 ## » Compatibility
 
-- Compatible with any Minecraft version supported by both **ZonePractice Pro** and **OldCombatMechanics**.
+- Compatible with Minecraft versions supported by both **AstralPractice** and **OldCombatMechanics**.
 
-Enjoy ZonePracOldCombat!
+Enjoy AstralPracOldCombat!

@@ -1,5 +1,5 @@
-name: ZonePracOldCombat
-version: 1.0.1
-main: dev.lokspel.zonepracoldcombat.ZonePracOldCombat
+name: AstralPracOldCombat
+version: '${version}'
+main: dev.lokspel.astralpracoldcombat.AstralPracOldCombat
 api-version: 1.13
-depend: [ZonePracticePro, OldCombatMechanics]
+depend: [AstralPractice, OldCombatMechanics]

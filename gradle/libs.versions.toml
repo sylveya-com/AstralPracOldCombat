@@ -1,0 +1,41 @@
+[versions]
+
+# plugins & build tools
+shadow = "9.6.1"
+
+# compile time processing
+lombok = "1.18.48"
+
+# platform api
+paper = "26.2.build.129-stable"
+
+# dependencies
+configura = "2.1.0"
+strata = "2.0.0"
+astralpractice = "c53d72c281"
+
+[libraries]
+
+# compile time processing
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+
+# platform api
+paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
+
+# practice api via JitPack
+astralpractice-api = { group = "com.github.sylveya", name = "AstralPractice", version.ref = "astralpractice" }
+
+# config & migrations
+configura = { group = "me.whereareiam", name = "configura", version.ref = "configura" }
+configura-feature-comment = { group = "me.whereareiam.configura.feature", name = "comment", version.ref = "configura" }
+strata = { group = "me.whereareiam", name = "strata", version.ref = "strata" }
+strata-adapter-configura = { group = "me.whereareiam", name = "strata-adapter-configura", version.ref = "strata" }
+
+[bundles]
+
+configura = ["configura", "configura-feature-comment"]
+strata = ["strata", "strata-adapter-configura"]
+
+[plugins]
+
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
