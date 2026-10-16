@@ -14,7 +14,7 @@ This addon bridges AstralPractice and OldCombatMechanics. Maps arena ladders to 
 ## » Installation
 
 1. Install AstralPractice and OldCombatMechanics
-2. Drop `AstralPracOldCombat-1.0.0.jar` into your `plugins/` folder
+2. Drop `AstralPracOldCombat-*.jar` into your `plugins/` folder
 3. Restart the server
 4. Edit `plugins/AstralPracOldCombat/config.yml` to map ladders to modes
 
@@ -26,7 +26,7 @@ The plugin disables itself on startup if either the AstralPractice or OldCombatM
 ./gradlew build
 ```
 
-The compiled plugin jar will be generated in `build/libs/AstralPracOldCombat-1.0.0.jar`.
+The compiled plugin jar will be generated in `build/libs/AstralPracOldCombat-*.jar`.
 
 ## » Configuration
 
